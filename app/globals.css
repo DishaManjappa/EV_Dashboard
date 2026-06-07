@@ -1,0 +1,294 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ev-bg: #F5EFDF;
+  --ev-card: #F8F5E8;
+  --ev-border: #D8D0B8;
+  --ev-heading: #103524;
+  --ev-primary: #315A3E;
+}
+
+html,
+body {
+  background-color: var(--ev-bg);
+  color: #111111;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Leaflet container default tile background to match theme */
+.leaflet-container {
+  background: #EDE6CF;
+  font-family: inherit;
+}
+
+.leaflet-control-attribution {
+  background: rgba(248, 245, 232, 0.8) !important;
+  font-size: 10px !important;
+  color: #6B6B5F !important;
+}
+
+/* ── Fleet map markers ───────────────────────────────────── */
+
+/* Glide vehicle markers between streamed positions, but never during a zoom
+   (Leaflet flags the container with .leaflet-zoom-anim while zooming). */
+.leaflet-marker-pane .leaflet-marker-icon {
+  transition: transform 1.6s linear;
+}
+.leaflet-zoom-anim .leaflet-marker-pane .leaflet-marker-icon {
+  transition: none;
+}
+
+.ev-vmarker-wrap {
+  background: transparent;
+  border: none;
+}
+.ev-vmarker {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ev-vmarker__dot {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--c);
+  color: #f8f5e8;
+  border: 2.5px solid #f8f5e8;
+  box-shadow: 0 2px 6px rgba(16, 53, 36, 0.35);
+  transition: width 0.15s ease, height 0.15s ease, box-shadow 0.15s ease;
+}
+.ev-vmarker__dot svg {
+  width: 18px;
+  height: 11px;
+}
+.ev-vmarker.is-selected .ev-vmarker__dot {
+  width: 33px;
+  height: 33px;
+  box-shadow: 0 0 0 3px rgba(49, 90, 62, 0.28), 0 4px 12px rgba(16, 53, 36, 0.45);
+}
+.ev-vmarker.is-selected .ev-vmarker__dot svg {
+  width: 22px;
+  height: 13px;
+}
+/* Pulsing ring for vehicles in an alert state */
+.ev-vmarker__pulse {
+  position: absolute;
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--c);
+  opacity: 0.55;
+  animation: ev-map-pulse 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes ev-map-pulse {
+  0% { transform: scale(1); opacity: 0.55; }
+  70% { transform: scale(2.5); opacity: 0; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+/* Charging bolt badge */
+.ev-vmarker__bolt {
+  position: absolute;
+  z-index: 3;
+  right: 3px;
+  bottom: 3px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #d6a534;
+  color: #3a2c00;
+  font-size: 9px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #f8f5e8;
+  box-shadow: 0 1px 3px rgba(16, 53, 36, 0.3);
+}
+
+/* Floating "recenter" control on the map */
+.ev-map-recenter {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 9999px;
+  border: 1px solid var(--ev-border);
+  background: rgba(248, 245, 232, 0.95);
+  color: var(--ev-heading);
+  padding: 6px 12px;
+  font-size: 11.5px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(16, 53, 36, 0.12);
+  backdrop-filter: blur(4px);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.ev-map-recenter:hover {
+  background: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* Map loading / error overlay shimmer */
+.ev-map-skeleton {
+  background: linear-gradient(
+    100deg,
+    #ede6cf 30%,
+    #f3eedc 50%,
+    #ede6cf 70%
+  );
+  background-size: 200% 100%;
+  animation: ev-map-shimmer 1.4s ease-in-out infinite;
+}
+@keyframes ev-map-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.ev-map-overlay-fade {
+  animation: ev-map-fade-out 0.45s ease forwards;
+}
+@keyframes ev-map-fade-out {
+  to { opacity: 0; visibility: hidden; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .leaflet-marker-pane .leaflet-marker-icon { transition: none; }
+  .ev-vmarker__pulse,
+  .ev-map-skeleton { animation: none; }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #D8D0B8;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B9B196;
+}
+
+/* Recharts tooltip override */
+.recharts-default-tooltip {
+  background: #F8F5E8 !important;
+  border: 1px solid #D8D0B8 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 30px rgba(16, 53, 36, 0.08) !important;
+}
+.recharts-tooltip-label {
+  color: #103524 !important;
+  font-weight: 600 !important;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Sidebar interactions ───────────────────────────────── */
+
+/* Pulsing ring on the alert badge */
+@keyframes ev-badge-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 2.5px rgba(20, 34, 16, 0.95),
+      0 0 0 0 rgba(182, 68, 50, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 2.5px rgba(20, 34, 16, 0.95),
+      0 0 0 5px rgba(182, 68, 50, 0);
+  }
+}
+.ev-badge-pulse {
+  animation: ev-badge-pulse 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Staggered entrance for nav items */
+@keyframes ev-nav-in {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.ev-nav-in {
+  opacity: 0;
+  animation: ev-nav-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Soft pulse behind the logo badge */
+@keyframes ev-logo-glow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.9; }
+}
+.ev-logo-glow {
+  animation: ev-logo-glow 5s ease-in-out infinite;
+}
+
+/* Toast slide-in */
+@keyframes ev-toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+.ev-toast-in {
+  animation: ev-toast-in 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Routed-content entrance — replays on every navigation (main is keyed by
+   pathname) so each page settles in instead of snapping. */
+@keyframes ev-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.ev-page-in {
+  animation: ev-page-in 0.34s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ev-badge-pulse,
+  .ev-nav-in,
+  .ev-logo-glow,
+  .ev-toast-in,
+  .ev-page-in {
+    animation: none;
+  }
+  .ev-nav-in,
+  .ev-page-in {
+    opacity: 1;
+  }
+}

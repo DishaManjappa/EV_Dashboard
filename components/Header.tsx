@@ -31,8 +31,9 @@ const REGION = "US-WEST-2";
 
 // Maps the active route to its breadcrumb label so the header always mirrors
 // the sidebar nav the user came from.
+// "/" (the landing/overview page) falls through to the "Overview" default, so
+// it's intentionally omitted here — every other key is matched by prefix.
 const SECTIONS: Record<string, string> = {
-  "/overview": "Overview",
   "/fleet": "Fleet",
   "/drivers": "Drivers",
   "/charging": "Charging",
@@ -124,7 +125,7 @@ export default function Header() {
         >
           <MuiLink
             component={Link}
-            href="/overview"
+            href="/"
             underline="none"
             sx={{
               display: "inline-flex",

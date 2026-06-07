@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -13,7 +14,7 @@ import {
 } from "lucide-react";
 import { useAppSelector } from "@/store";
 const navItems = [
-  { label: "Overview", href: "/overview", icon: LayoutDashboard },
+  { label: "Overview", href: "/", icon: LayoutDashboard },
   { label: "Fleet", href: "/fleet", icon: Car },
   { label: "Drivers", href: "/drivers", icon: Users },
   { label: "Charging", href: "/charging", icon: Zap },
@@ -35,10 +36,15 @@ export default function Sidebar() {
           top zones line up across the sidebar / content boundary. */}
       <div className="relative flex h-16 items-center px-5">
         <div className="flex items-center gap-3">
-          {/* Bare logo mark — no badge background */}
-          <img
+          {/* Bare logo mark — no badge background. next/image downsizes the
+              1254² source to the ~36px it actually renders at, so we ship a few
+              KB instead of the full PNG on first paint. */}
+          <Image
             src="/sitelogo.png"
             alt="EV Dashboard — Fleet Control"
+            width={36}
+            height={36}
+            priority
             className="h-9 w-9 shrink-0 object-contain"
           />
 
@@ -66,7 +72,7 @@ export default function Sidebar() {
           {navItems.map((item, i) => {
             const isActive =
               pathname === item.href ||
-              (item.href !== "/overview" && pathname?.startsWith(item.href));
+              (item.href !== "/" && pathname?.startsWith(item.href));
             const Icon = item.icon;
             return (
               <li
@@ -135,10 +141,15 @@ export default function Sidebar() {
             "linear-gradient(to bottom, transparent 0%, black 18%, black 100%)",
         }}
       >
-        <img
+        {/* Decorative — lazy-loaded and downscaled so it never competes with
+            the dashboard content for first-paint bandwidth. */}
+        <Image
           src="/greencar.png"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover"
+          fill
+          sizes="228px"
+          loading="lazy"
+          className="object-cover"
           style={{ objectPosition: "center 40%" }}
         />
         <div

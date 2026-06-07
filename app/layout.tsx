@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import {
   Inter,
   Space_Grotesk,
@@ -58,10 +58,53 @@ const sora = Sora({
   display: "swap",
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const SITE_NAME = "EV Fleet Dashboard";
+const SITE_DESCRIPTION =
+  "Monitor your electric vehicle fleet in real time — live vehicle positions, battery health, charging network status, alerts, and energy analytics in one control room.";
+const BANNER = "/carbanner.png";
+
 export const metadata: Metadata = {
-  title: "EV Fleet Dashboard",
-  description:
-    "Real-time visibility and intelligence across your electric fleet.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} — Real-Time Fleet Intelligence`,
+    template: `%s · ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  authors: [{ name: SITE_NAME }],
+  keywords: [
+    "EV fleet management",
+    "electric vehicle dashboard",
+    "fleet tracking",
+    "charging network",
+    "battery monitoring",
+    "fleet telematics",
+    "EV analytics",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} — Real-Time Fleet Intelligence`,
+    description: SITE_DESCRIPTION,
+    url: "/",
+    images: [
+      { url: BANNER, width: 600, height: 227, alt: `${SITE_NAME} preview` },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_NAME} — Real-Time Fleet Intelligence`,
+    description: SITE_DESCRIPTION,
+    images: [BANNER],
+  },
+  robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#142210",
+  colorScheme: "light",
 };
 
 export default function RootLayout({

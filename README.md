@@ -134,3 +134,11 @@ charts, map markers, tables, badges) reactively reflects each tick.
   - Map UX enhancements (clustering, geofences, route playback, smooth transitions)
   - Real-time polish (animated value transitions, in-place updates, change highlights)
   - Flesh out Drivers & Settings UIs
+
+## Links:
+  ## [Prototype Link](https://www.figma.com/proto/JZ2UsHGsuhAb6PDRaI3muc/Next-Gen-Electric-Vehicle--EV--Management-Dashboard?node-id=2-3&p=f&t=MEa4WIjVhC4IynYT-1&scaling=contain&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=2%3A3)
+
+## [Design Link](https://www.figma.com/design/JZ2UsHGsuhAb6PDRaI3muc/Next-Gen-Electric-Vehicle--EV--Management-Dashboard?node-id=148-44&t=m6h3EYQTNtJkEQAI-1)
+
+## [Deployed Application Link (Vercel)](https://ev-dashboard-steel.vercel.app/)
+

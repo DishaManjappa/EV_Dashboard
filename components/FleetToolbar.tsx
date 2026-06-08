@@ -73,7 +73,7 @@ export default function FleetToolbar() {
           },
         }}
         sx={{
-          minWidth: 260,
+          minWidth: { xs: "100%", sm: 260 },
           flex: 1,
           "& .MuiOutlinedInput-root": {
             borderRadius: "999px",

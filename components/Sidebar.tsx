@@ -11,8 +11,10 @@ import {
   Bell,
   BarChart3,
   Settings,
+  X,
 } from "lucide-react";
-import { useAppSelector } from "@/store";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { setMobileNav } from "@/store/slices/uiSlice";
 const navItems = [
   { label: "Overview", href: "/", icon: LayoutDashboard },
   { label: "Fleet", href: "/fleet", icon: Car },
@@ -25,10 +27,18 @@ const navItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const dispatch = useAppDispatch();
   const alertCount = useAppSelector((s) => s.fleet.alerts.length);
+  const mobileNavOpen = useAppSelector((s) => s.ui.mobileNavOpen);
+
+  const closeNav = () => dispatch(setMobileNav(false));
 
   return (
-    <aside className="fixed left-0 top-0 z-30 flex h-screen w-[228px] flex-col overflow-hidden bg-ev-sidebar font-sans text-ev-sidebarText shadow-[6px_0_24px_-18px_rgba(16,53,36,0.5)]">
+    <aside
+      className={`fixed left-0 top-0 z-50 flex h-screen w-[228px] flex-col overflow-hidden bg-ev-sidebar font-sans text-ev-sidebarText shadow-[6px_0_24px_-18px_rgba(16,53,36,0.5)] transition-transform duration-300 ease-out lg:translate-x-0 lg:shadow-[6px_0_24px_-18px_rgba(16,53,36,0.5)] ${
+        mobileNavOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"
+      }`}
+    >
       {/* No lightening overlays — the sidebar stays a flat solid color so it
           matches the header exactly (same bg-ev-sidebar, no gradients). */}
 
@@ -61,6 +71,16 @@ export default function Sidebar() {
             </span>
           </div>
         </div>
+
+        {/* Close control — only meaningful while the drawer is open on mobile */}
+        <button
+          type="button"
+          onClick={closeNav}
+          aria-label="Close navigation menu"
+          className="ml-auto flex h-8 w-8 items-center justify-center rounded-full text-ev-sidebarText/60 transition-colors hover:bg-white/[0.06] hover:text-ev-light lg:hidden"
+        >
+          <X className="h-[18px] w-[18px]" strokeWidth={2} />
+        </button>
       </div>
 
       {/* Hairline divider */}
@@ -82,6 +102,7 @@ export default function Sidebar() {
               >
                 <Link
                   href={item.href}
+                  onClick={closeNav}
                   aria-current={isActive ? "page" : undefined}
                   className={`group relative flex items-center gap-3 overflow-hidden rounded-[11px] px-3 py-2.5 text-[13px] tracking-tight transition-all duration-200 ease-out ${
                     isActive

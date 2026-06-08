@@ -15,6 +15,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ButtonBase from "@mui/material/ButtonBase";
 import Box from "@mui/material/Box";
 import GridViewRounded from "@mui/icons-material/GridViewRounded";
+import MenuRounded from "@mui/icons-material/MenuRounded";
 import ChevronRightRounded from "@mui/icons-material/ChevronRightRounded";
 import LocationOnRounded from "@mui/icons-material/LocationOnRounded";
 import SyncRounded from "@mui/icons-material/SyncRounded";
@@ -24,7 +25,7 @@ import PersonOutlineRounded from "@mui/icons-material/PersonOutlineRounded";
 import SettingsRounded from "@mui/icons-material/SettingsRounded";
 import LogoutRounded from "@mui/icons-material/LogoutRounded";
 import { useAppSelector, useAppDispatch } from "@/store";
-import { toggleLive } from "@/store/slices/uiSlice";
+import { toggleLive, toggleMobileNav } from "@/store/slices/uiSlice";
 import NotificationBell from "./NotificationBell";
 
 const REGION = "US-WEST-2";
@@ -111,13 +112,44 @@ export default function Header() {
           fades downward, so it's present without being a full separator. */}
       <div className="pointer-events-none absolute left-0 top-0 h-16 w-px bg-gradient-to-b from-white/[0.18] via-white/[0.06] to-transparent" />
 
-      <div className="relative flex h-16 items-center gap-6 px-8">
+      <div className="relative flex h-16 items-center gap-3 px-4 sm:gap-6 sm:px-6 lg:px-8">
+        {/* Hamburger — opens the off-canvas nav drawer (mobile/tablet only) */}
+        <ButtonBase
+          onClick={() => dispatch(toggleMobileNav())}
+          aria-label="Open navigation menu"
+          sx={{
+            display: { xs: "flex", lg: "none" },
+            flex: "none",
+            width: 38,
+            height: 38,
+            borderRadius: "999px",
+            color: "rgba(243,238,220,0.85)",
+            transition: "background-color .2s",
+            "&:hover": { bgcolor: "rgba(255,255,255,0.07)" },
+          }}
+        >
+          <MenuRounded sx={{ fontSize: 22 }} />
+        </ButtonBase>
+
         {/* Breadcrumb trail mirroring the sidebar nav */}
         <Breadcrumbs
           separator={<ChevronRightRounded sx={{ fontSize: 16 }} />}
           aria-label="breadcrumb"
           sx={{
+            minWidth: 0,
+            overflow: "hidden",
+            "& .MuiBreadcrumbs-ol": { flexWrap: "nowrap", minWidth: 0 },
+            "& .MuiBreadcrumbs-li": {
+              minWidth: 0,
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            },
+            // On mobile the home crumb (icon) + separator are dropped to free up
+            // room, so the section label sits on its own without crowding the
+            // right-hand controls.
             "& .MuiBreadcrumbs-separator": {
+              display: { xs: "none", sm: "flex" },
               color: "rgba(243,238,220,0.28)",
               mx: 0.5,
             },
@@ -128,7 +160,7 @@ export default function Header() {
             href="/"
             underline="none"
             sx={{
-              display: "inline-flex",
+              display: { xs: "none", sm: "inline-flex" },
               alignItems: "center",
               gap: "7px",
               color: "rgba(243,238,220,0.6)",
@@ -140,7 +172,9 @@ export default function Header() {
             }}
           >
             <GridViewRounded sx={{ fontSize: 16, color: "#C8E66A" }} />
-            EV Dashboard
+            <Box component="span" sx={{ display: { xs: "none", sm: "inline" } }}>
+              EV Dashboard
+            </Box>
           </MuiLink>
           <Typography
             sx={{
@@ -156,7 +190,7 @@ export default function Header() {
         </Breadcrumbs>
 
         {/* Right cluster */}
-        <div className="ml-auto flex items-center gap-3.5">
+        <div className="ml-auto flex items-center gap-2 sm:gap-3.5">
           {/* Live / Pause stream toggle */}
           <Tooltip
             title={live ? "Pause live data stream" : "Resume live data stream"}

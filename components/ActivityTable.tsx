@@ -63,8 +63,8 @@ export default function ActivityTable() {
         </Link>
       </div>
 
-      <TableContainer>
-        <Table>
+      <TableContainer sx={{ maxWidth: "100%" }}>
+        <Table sx={{ minWidth: 640 }}>
           <TableHead>
             <TableRow>
               {["Vehicle ID", "Driver", "Status", "Battery", "Range", "Location"].map(

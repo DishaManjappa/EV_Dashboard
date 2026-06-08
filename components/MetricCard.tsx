@@ -75,9 +75,9 @@ export default function MetricCard({
         ) : null}
       </div>
 
-      <div className="mt-3 flex items-end justify-between gap-2">
+      <div className="mt-3 flex flex-col items-stretch gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div
-          className={`font-display text-[28px] font-semibold leading-none transition-colors ${
+          className={`min-w-0 break-words font-display text-[24px] font-semibold leading-tight transition-colors sm:text-[28px] sm:leading-none ${
             isAlert ? "text-ev-red" : "text-ev-heading"
           }`}
         >
@@ -87,7 +87,7 @@ export default function MetricCard({
           <svg
             viewBox="0 0 100 28"
             preserveAspectRatio="none"
-            className="h-7 w-[88px] shrink-0 opacity-80"
+            className="h-7 w-full shrink-0 opacity-80 sm:w-[88px]"
             aria-hidden
           >
             <defs>

@@ -16,7 +16,7 @@ export default function PlaceholderPage({
   features,
 }: PlaceholderPageProps) {
   return (
-    <div className="rounded-3xl border border-ev-border bg-ev-card p-10 shadow-card">
+    <div className="rounded-3xl border border-ev-border bg-ev-card p-6 shadow-card sm:p-10">
       <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-ev-light/60 text-ev-primary">
         <Icon className="h-6 w-6" strokeWidth={1.8} />
       </div>

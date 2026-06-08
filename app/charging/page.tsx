@@ -71,7 +71,7 @@ export default function ChargingPage() {
               <Legend color="#103524" label="Station" station />
             </div>
           </div>
-          <div className="relative h-[560px]">
+          <div className="relative h-[440px] sm:h-[560px]">
             <FleetMap height="100%" variant="full" showRoute={true} />
             {/* Bottom legend for mobile */}
             <div className="absolute bottom-3 left-3 right-3 flex flex-wrap items-center justify-center gap-3 rounded-full border border-ev-border bg-ev-card/95 px-3 py-1.5 text-[10.5px] text-ev-mutedText backdrop-blur md:hidden">

@@ -96,13 +96,13 @@ export default function AlertsPage() {
                 <li
                   key={a.id}
                   onClick={() => inspect(a.id, a.vehicleId)}
-                  className="flex cursor-pointer items-center gap-4 px-5 py-4 transition-colors hover:bg-white/40"
+                  className="flex cursor-pointer items-center gap-3 px-4 py-4 transition-colors hover:bg-white/40 sm:gap-4 sm:px-5"
                 >
                   <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${ROW_TONE[a.type]}`}>
                     <Icon className="h-4 w-4" strokeWidth={2.1} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                       <span className="font-medium text-ev-heading">{a.vehicleId}</span>
                       {v && (
                         <>

@@ -140,8 +140,8 @@ export default function FleetTable() {
 
   return (
     <div className="overflow-hidden rounded-2xl border border-ev-border bg-ev-card shadow-card">
-      <TableContainer>
-        <Table sx={{ tableLayout: "fixed", width: "100%" }}>
+      <TableContainer sx={{ maxWidth: "100%" }}>
+        <Table sx={{ tableLayout: "fixed", width: "100%", minWidth: 760 }}>
           <TableHead>
             <TableRow>
               {columns.map((c) => (

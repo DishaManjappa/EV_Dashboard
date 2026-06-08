@@ -93,7 +93,7 @@ export default function OverviewPage() {
       <section className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
         <ChargingGauge />
         <div className="rounded-2xl border border-ev-border bg-ev-card shadow-card lg:col-span-2">
-          <div className="flex items-center justify-between border-b border-ev-border/70 px-5 py-4">
+          <div className="flex flex-col gap-3 border-b border-ev-border/70 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h3 className="font-display text-[15px] font-semibold text-ev-heading">
                 Fleet Map Overview

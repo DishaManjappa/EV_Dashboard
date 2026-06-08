@@ -3,6 +3,10 @@ import type { Toast } from "@/lib/types";
 
 interface UiState {
   sidebarCollapsed: boolean;
+  // Whether the off-canvas nav drawer is open on mobile/tablet. Always starts
+  // closed (matches the server render) and is irrelevant at ≥lg, where the
+  // sidebar is permanently docked via CSS.
+  mobileNavOpen: boolean;
   live: boolean;
   // ids of alerts the operator has opened — the header bell counts the rest
   seenAlertIds: string[];
@@ -11,6 +15,7 @@ interface UiState {
 
 const initialState: UiState = {
   sidebarCollapsed: false,
+  mobileNavOpen: false,
   live: true,
   seenAlertIds: [],
   toasts: [],
@@ -24,6 +29,12 @@ const uiSlice = createSlice({
   reducers: {
     toggleSidebar(state) {
       state.sidebarCollapsed = !state.sidebarCollapsed;
+    },
+    toggleMobileNav(state) {
+      state.mobileNavOpen = !state.mobileNavOpen;
+    },
+    setMobileNav(state, action: PayloadAction<boolean>) {
+      state.mobileNavOpen = action.payload;
     },
     toggleLive(state) {
       state.live = !state.live;
@@ -54,6 +65,8 @@ const uiSlice = createSlice({
 
 export const {
   toggleSidebar,
+  toggleMobileNav,
+  setMobileNav,
   toggleLive,
   setLive,
   acknowledgeAlert,

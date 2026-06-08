@@ -46,7 +46,7 @@ function ToastItem({ toast }: { toast: Toast }) {
     <div
       role="status"
       onClick={open}
-      className="ev-toast-in pointer-events-auto flex w-[330px] cursor-pointer items-start gap-3 rounded-2xl border border-ev-border bg-ev-card p-3.5 shadow-panel transition-transform hover:-translate-y-0.5"
+      className="ev-toast-in pointer-events-auto flex w-[330px] max-w-[calc(100vw-2rem)] cursor-pointer items-start gap-3 rounded-2xl border border-ev-border bg-ev-card p-3.5 shadow-panel transition-transform hover:-translate-y-0.5"
     >
       <div
         className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border ${
@@ -84,7 +84,7 @@ export default function ToastContainer() {
   const toasts = useAppSelector((s) => s.ui.toasts);
 
   return (
-    <div className="pointer-events-none fixed right-5 top-20 z-50 flex flex-col gap-2.5">
+    <div className="pointer-events-none fixed right-4 top-20 z-50 flex flex-col gap-2.5 sm:right-5">
       {toasts.map((t) => (
         <ToastItem key={t.id} toast={t} />
       ))}

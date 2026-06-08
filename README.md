@@ -10,7 +10,7 @@ Built with **Next.js 14 (App Router)**, **TypeScript**, **Redux Toolkit**,
 
 ### Prerequisites
 
-- **Node.js 18.17+** (or 20+ recommended)
+- **Node.js 18.17+** (or 20+ )
 - **npm** (ships with Node)
 
 ### Setup
@@ -125,13 +125,12 @@ charts, map markers, tables, badges) reactively reflects each tick.
 
 ---
 
-## Future Roadmap (with more time)
+## Future Roadmap 
 
   - Data-fetching layer (RTK Query / React Query — caching, optimistic updates, reconnection)
   - Performance at scale (table/list virtualization, memoized selectors, bundle audit, lazy-loading)
   - Theming & personalization (light/dark, density, persisted preferences)
   - Richer data visualization (drill-downs, brush/zoom, client-side CSV/PDF export)
   - Map UX enhancements (clustering, geofences, route playback, smooth transitions)
-  - Internationalization (next-intl, locale-aware units/formatting)
   - Real-time polish (animated value transitions, in-place updates, change highlights)
   - Flesh out Drivers & Settings UIs

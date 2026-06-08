@@ -127,14 +127,11 @@ charts, map markers, tables, badges) reactively reflects each tick.
 
 ## Future Roadmap (with more time)
 
-- **Real backend integration** — replace the mock socket with a real WebSocket /
-  Server-Sent Events feed and a REST/GraphQL API, with optimistic updates and
-  reconnection handling.
-- **Authentication & RBAC** — real login, role-based access (operator vs. admin),
-  and per-tenant fleet scoping.
-- **Richer analytics** — historical trend comparisons, exportable reports
-  (CSV/PDF), cost forecasting, and battery-degradation modelling.
-- **Map enhancements** — geofencing, clustering at scale, live route playback,
-  and turn-by-turn ETA from a routing provider.
-- **Theming** — a light/dark toggle and user-customizable density.
-
+  - Data-fetching layer (RTK Query / React Query — caching, optimistic updates, reconnection)
+  - Performance at scale (table/list virtualization, memoized selectors, bundle audit, lazy-loading)
+  - Theming & personalization (light/dark, density, persisted preferences)
+  - Richer data visualization (drill-downs, brush/zoom, client-side CSV/PDF export)
+  - Map UX enhancements (clustering, geofences, route playback, smooth transitions)
+  - Internationalization (next-intl, locale-aware units/formatting)
+  - Real-time polish (animated value transitions, in-place updates, change highlights)
+  - Flesh out Drivers & Settings UIs
